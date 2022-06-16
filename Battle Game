@@ -1,0 +1,413 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+
+//ph1-Player1 Health(hp)
+//pa1-player2 Attack
+//pd1-Player1 Defence
+
+void selectingstyle(){
+    printf("Enter [1] to select Punch\tEnter [2] to select Kick\t\n");
+    printf("Enter [3] to select Lower Kick\tEnter [4] to select Headshot\t\n\n");
+}
+
+
+int printRandoms(int lower, int upper,  int count)
+{
+    int i;
+    int num = (rand() %(upper - lower + 1)) + lower;
+    return num;
+}
+
+void check(int a){
+    if(a<=0 && a>3){
+        printf("\tEnter a Valid Value! \n");
+        scanf("%d",&a);
+        check(a);
+    }
+    else{
+        return;
+    }
+}
+//--------------* DEFENCE START*--------------
+bool Defence1(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(pd1>0){
+        //cout<<"\t---Player1, Do you want to use your Defence?---"<<endl;
+        //cout<<"\t-- Enter Y/N (Yes/No)--"<<endl;
+        printf("\t---Player1, Do you want to use your Defence?---\n");
+        printf("\t-- Enter Y/N (Yes/No)--\n");
+        char x;
+        scanf("%s",&x);
+        if(x=='Y' || x=='y'){
+            return true;
+        }
+        else if(x=='N' || x=='n'){
+            return false;
+        }
+        else{
+            //cout<<"Enter a Valid Value"<<endl;
+            printf("Enter a Valid Value\n");
+            return Defence1(pa1,ph1,pd1,pa2,ph2,pd2);
+        }
+    }
+    return false;
+}
+
+bool Defence2(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(pd2>0){
+        //cout<<"\t---Player 2, Do you want to use your Defence?---"<<endl;
+        //cout<<"\t-- Enter Y/N (Yes/No)--"<<endl;
+        printf("\t---Player 2, Do you want to use your Defence?---");
+        printf("\t-- Enter Y/N (Yes/No)--\n");
+        char x;
+        //cin>>x;
+        scanf("%s",&x);
+        if(x=='Y' || x=='y'){
+            return true;
+        }
+        else if(x=='N' || x=='n'){
+            return false;
+        }
+        else{
+            //cout<<"Enter a Valid Value"<<endl;
+            printf("Enter a Valid Value\n");
+            return Defence2(pa1,ph1,pd1,pa2,ph2,pd2);
+        }
+    }
+    return false;
+}
+//--------------* DEFENCE END*--------------
+
+//----------------------------ATTACKS PLAYER-1 -----------------------
+void kickp1(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(Defence2(pa1,ph1,pd1,pa2,ph2,pd2)==true){
+        int x=*pa2-(*pd1)*10;
+        if(x>0){
+            *ph2=*ph2-x;
+        }
+        *pd2=*pd2-1;
+    }
+    else{
+        ph2=ph2-printRandoms(0.5(pa1),0.8(*pa1),1);
+    }
+}
+void Punchp1(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(Defence2(pa1,ph1,pd1,pa2,ph2,pd2)==true){
+        int x=*pa2-(*pd1)*10;
+        if(x>0){
+            *ph2=*ph2-x;
+        }
+        *pd2=*pd2-1;
+    }
+    else{
+        ph2=ph2-printRandoms(.3(pa1),.9(*pa1),1);
+    }
+}
+void HeadShotp1(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(Defence2(pa1,ph1,pd1,pa2,ph2,pd2)==true){
+        int x=*pa2-(*pd1)*10;
+        if(x>0){
+            *ph2=*ph2-x;
+        }
+        *pd2=*pd2-1;
+    }
+    else{
+        *ph2=*ph2-printRandoms(0,*pa1,1);
+    }
+}
+void Lowerkickp1(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(Defence2(pa1,ph1,pd1,pa2,ph2,pd2)==true){
+        int x=*pa2-(*pd1)*10;
+        if(x>0){
+            *ph2=*ph2-x;
+        }
+        *pd2=*pd2-1;
+    }
+    else{
+        ph2=ph2-printRandoms(.4(pa1),.7(*pa1),1);
+    }
+    return;
+}
+
+//----------------------------ATTACKS Player-1 END-----------------------
+
+
+//----------------------------ATTACKS PLAYER-2 START-----------------------
+void kickp2(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(Defence1(pa1,ph1,pd1,pa2,ph2,pd2)==true){
+        int x=*pa1-(*pd2)*10;
+        if(x>0){
+            *ph2=*ph2-x;
+        }
+        *pd1=*pd1-1;
+    }
+    else{
+        ph1=ph1-printRandoms(0.5(pa2),0.8(*pa2),1);
+    }
+}
+void Punchp2(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(Defence1(pa1,ph1,pd1,pa2,ph2,pd2)==true){
+        int x=*pa1-(*pd2)*10;
+        if(x>0){
+            *ph1=*ph1-x;
+        }
+        *pd1=*pd1-1;
+    }
+    else{
+        ph1=ph1-printRandoms(.3(pa2),.9(*pa2),1);
+    }
+}
+void HeadShotp2(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(Defence1(pa1,ph1,pd1,pa2,ph2,pd2)==true){
+        int x=*pa1-(*pd2)*10;
+        if(x>0){
+            *ph1=*ph1-x;
+        }
+        *pd1=*pd1-1;
+    }
+    else{
+        *ph1=*ph1-printRandoms(0,*pa2,1);
+    }
+}
+void Lowerkickp2(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    if(Defence1(pa1,ph1,pd1,pa2,ph2,pd2)==true){
+        int x=*pa1-(*pd2)*10;
+        if(x>0){
+            *ph1=*ph1-x;
+        }
+        *pd1=*pd1-1;
+    }
+    else{
+        ph1=ph1-printRandoms(.4 *(*pa2),.7(*pa2),1);
+    }
+    return;
+}
+
+//----------------------------ATTACKS Player-2 END-----------------------
+
+//---------STATS START--------
+void showstats(int *pa1,int *ph1,int *pd1,int *pa2,int *ph2,int *pd2){
+    // cout<<"\t_-----STATS-------\n";
+    // cout<<"\n\n\t----* Player-1:*----\n";
+    // cout<<"Health: "<<ph1<<"\t Defence: "<<pd1;
+    // cout<<"\n\n\t----* Player-2:*----\n";
+    // cout<<"Health: "<<ph2<<"\t Defence: "<<pd2;
+    // cout<<endl;
+    // cout<<endl;
+    // cout<<endl;
+    // cout<<"\t_-----STATS END-------\n\n\n";
+    printf("\t_-----STATS-------\n\n\n\t----* Player-1:*----\n");
+    printf("Health: %d \t Defence: %d",*ph1,*pd1);
+    printf("\n\n\t----* Player-2:*----\n");
+    printf("Health: %d \t Defence: %d\n\n",*ph2,*pd2);
+    printf("\t_-----STATS END-------\n\n\n\n\n\n");
+
+}
+//---------STATS END--------
+
+
+
+
+int main()
+{
+    int a1=35;
+    int hp1=80;
+    int d1=1;
+    //------
+    int a2=33;
+    int hp2=90;
+    int d2=2;
+    //-------
+    int a3=30;
+    int hp3=110;
+    int d3=2;
+    //-------
+    //-------------------Menu------------------------
+    printf("*****\n");
+    printf("------------List of Character's-----------\n\n\n");
+    printf("\t\tLOKI:\n ATTACK: 35cp    HP:80    DEF: 1\n\n");
+    printf("\t\tThor:\n ATTACK: 33cp    HP:90    DEF: 2\n\n");
+    printf("\t\tIron Man:\n ATTACK: 30cp    HP:110    DEF: 2\n\n");
+    // cout<<"Enter [1] to select Loki."<<endl;
+    // cout<<"Enter [2] to select Thor."<<endl;
+    // cout<<"Enter [3] to select Iron Man.\n\n"<<endl;
+    printf("Enter [1] to select Loki.\n");
+    printf("Enter [2] to select Thor.\n");
+    printf("Enter [3] to select Iron Man.\n\n\n");
+    
+    //-------Selecting Characters!-----------
+    int a,b,enemy_a1,enemy_a2;
+    // cout<<"\tFirst Player, Select your character!"<<endl;
+    // cin>>a;
+    // check(a);
+    // cout<<"\n\tSecond Player, Select your Character!"<<endl;
+    // cin>>b;
+    // check(b);
+    // cout<<endl;
+    printf("\tFirst Player, Select your character!\n");
+    scanf("%d",&a);
+    check(a);
+    printf("\n\tSecond Player, Select your Character!\n");
+    scanf("%d",&b);
+    check(b);
+    printf("\n");
+    
+//  pa1- Player 1 attack, ph1-Player 1 Hp, pd1-player1 Defence
+    int pa1,ph1,pd1;
+    int pa2,ph2,pd2;
+    if(a==1){
+        pa1=a1;
+        ph1=hp1;
+        pd1=d1;
+    }
+    else if(a==2){
+        pa1=a2;
+        ph1=hp2;
+        pd1=d2;
+    }
+    else{
+        pa1=a3;
+        ph1=hp3;
+        pd1=d3;
+    }
+    if(b==1){
+        pa2=a1;
+        ph2=hp1;
+        pd2=d1;
+    }
+    else if(b==2){
+        pa2=a2;
+        ph2=hp2;
+        pd2=d2;
+    }
+    else{
+        pa2=a3;
+        ph2=hp3;
+        pd2=d3;
+    }//--Player 1 and Player 2 Stats are now got!!
+
+
+
+    int count =1;
+    int who_Won;
+    while(ph1>0 && ph2>0){
+        if(count%2!=0){
+            //cout<<"\t---Player 1, Select Your Attack!!---"<<endl;
+            printf("\t---Player 1, Select Your Attack!!---\n");
+            selectingstyle();
+            int z;
+            //cin>>z;
+            scanf("%d",&z);
+            if(z==1){
+                Punchp1(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+            }
+            else if(z==2){
+                kickp1(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+            }
+            else if(z==3){
+                Lowerkickp1(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+            }
+            else if(z==4){
+                HeadShotp1(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+            }
+            else{
+                //cout<<"Enter again Idiot!"<<endl;
+                printf("Enter again Idiot!\n");
+                //cin>>z;
+                scanf("%d",&z);
+                if(z==1){
+                Punchp1(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+                }
+                else if(z==2){
+                    kickp1(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+                }
+                else if(z==3){
+                    Lowerkickp1(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+                }
+                else if(z==4){
+                    HeadShotp1(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+                }
+                else{
+                    //cout<<"Now we had it.! Game terminating...!"<<endl;
+                    printf("Now we had it.! Game terminating...!\n");
+                    return 0;
+                }
+            }
+            if(ph2<=0){
+                who_Won=0;
+                ph2=0;
+            }
+        }
+        else{
+            //cout<<"\t---Player 2, Select Your Attack!!---"<<endl;
+            printf("\t---Player 2, Select Your Attack!!---\n");
+            selectingstyle();
+            printf("\n");
+            int afk;
+            //cin>>afk;
+            scanf("%d",&afk);
+            if(afk==1){
+                Punchp2(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+            }
+            else if(afk==2){
+                kickp2(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+            }
+            else if(afk==3){
+                Lowerkickp2(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+            }
+            else if(afk==4){
+                HeadShotp2(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+            }
+            else{
+                //cout<<"Enter again Idiot!"<<endl;
+                printf("Enter again Idiot!\n");
+                //cin>>afk;
+                scanf("%d",&afk);
+                if(afk==1){
+                Punchp2(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+                }
+                else if(afk==2){
+                    kickp2(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+                }
+                else if(afk==3){
+                    Lowerkickp2(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+                }
+                else if(afk==4){
+                    HeadShotp2(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+                }
+                else{
+                    //cout<<"Now we had enough!. Game terminating...!"<<endl;
+                    printf("Now we had enough!. Game terminating...!\n");
+                    return 0;
+                }
+            }
+            if(ph1<=0){
+                who_Won=1;
+                ph1=0;
+            }
+        }
+        //cout<<"\n\n"<<endl;
+        printf("\n\n\n");
+        //cout<<endl;
+        if(count>=2 && count%2==0){
+            showstats(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+        }
+        count++;
+    }
+
+    showstats(&pa1,&ph1,&pd1,&pa2,&ph2,&pd2);
+
+    if(who_Won==0){
+        //cout<<"\n\t\t**----Congratulations Player 1-----*\n\t\t You Won this epic Battle!"<<endl;
+        printf("\n\t\t**----Congratulations Player 1-----*\n\t\t You Won this epic Battle!\n");
+    }
+    else{
+        //cout<<"\n\t\t**------Congratulations Player 2-----**\n\t\t You Won this epic Battle!"<<endl;
+        printf("\n\t\t**----Congratulations Player 2-----*\n\t\t You Won this epic Battle!\n");
+    }
+
+
+
+    return 0;
+}
